@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('order_id')->constrained()->onDelete('cascade');
+            $table->foreignId('daily_menu_id')->constrained()->onDelete('cascade');
+            
+            // What they chose for that day
+            $table->enum('item_type', ['soup', 'entree_a', 'entree_b', 'dessert']);
+
             $table->timestamps();
         });
     }

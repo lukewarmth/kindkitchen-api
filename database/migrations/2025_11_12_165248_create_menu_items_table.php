@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('menu_items', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->text('description')->nullable();
+            $table->enum('type', ['soup', 'entree', 'dessert']);
             $table->timestamps();
         });
     }

@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('weekly_menus', function (Blueprint $table) {
             $table->id();
+            $table->date('week_start_date');
+            $table->boolean('is_active')->default(false);
             $table->timestamps();
         });
     }
