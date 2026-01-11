@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\MenuItemController;
 use App\Http\Controllers\Api\WeeklyMenuController;
+use App\Http\Controllers\Api\OrderController;    
+use App\Http\Controllers\Api\UserMenuController; 
 
 // ===============================================
 // API ROUTES
@@ -19,6 +21,14 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'user']);
+    // 1. Get the current menu to display on the frontend
+    Route::get('/current-menu', [UserMenuController::class, 'current']);
+
+    // 2. Place an order
+    Route::post('/orders', [OrderController::class, 'store']);
+
+    // 3. View past orders
+    Route::get('/orders', [OrderController::class, 'index']);
 });
 
 
