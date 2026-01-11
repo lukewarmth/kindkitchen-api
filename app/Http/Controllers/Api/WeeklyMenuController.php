@@ -17,7 +17,7 @@ class WeeklyMenuController extends Controller
      */
     public function index()
     {
-        return WeeklyMenu::with('dailyMenus')
+        return WeeklyMenu::with('dailyMenus', 'week-start-date')
             ->orderBy('week_start_date', 'desc')
             ->get();
     }
