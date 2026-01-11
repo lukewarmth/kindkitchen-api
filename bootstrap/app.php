@@ -12,9 +12,17 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        // Register the AdminMiddleware with an alias 'is_admin'
+        $middleware->statefulApi();
+    
         $middleware->alias([
             'is_admin' => \App\Http\Middleware\AdminMiddleware::class,
+        ]);
+
+        $middleware->group('api', [
+            \Illuminate\Session\Middleware\StartSession::class,
+            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
