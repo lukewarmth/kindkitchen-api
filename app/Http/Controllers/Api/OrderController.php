@@ -15,16 +15,17 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        return $request->user()
-            ->orders()
-            ->with([
-                'items.dailyMenu.soup', 
-                'items.dailyMenu.entreeA', 
-                'items.dailyMenu.entreeB', 
-                'items.dailyMenu.dessert'
-            ])
-            ->orderBy('created_at', 'desc')
-            ->get();
+        return $request->user()->orders()
+        ->with([
+            // Use withTrashed() so old orders still show the food names even if archived
+            'items.dailyMenu.soup' => fn($q) => $q->withTrashed(),
+            'items.dailyMenu.entree_a' => fn($q) => $q->withTrashed(),
+            'items.dailyMenu.entree_b' => fn($q) => $q->withTrashed(),
+            'items.dailyMenu.dessert' => fn($q) => $q->withTrashed(),
+            'items.dailyMenu.weeklyMenu',
+        ])
+        ->orderBy('created_at', 'desc')
+        ->get();
     }
 
     /**

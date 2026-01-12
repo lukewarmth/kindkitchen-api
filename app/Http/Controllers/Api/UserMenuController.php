@@ -11,26 +11,25 @@ class UserMenuController extends Controller
     /**
      * Get the current or next available weekly menu.
      */
-    public function current()
+    public function current(Request $request)
     {
-        // Simple logic: Get the first menu that has a start date 
-        // greater than or equal to today (or simply the latest one created).
-        // For this project, let's just grab the latest active one.
+        $date = $request->query('date', now()->format('Y-m-d'));
 
-        $menu = WeeklyMenu::with([
-            'dailyMenus.soup',
-            'dailyMenus.entreeA',
-            'dailyMenus.entreeB',
-            'dailyMenus.dessert'
-        ])
-        ->where('is_active', true)
-        ->orderBy('week_start_date', 'asc') // Get the upcoming one
-        ->first();
+        // GREEDY SEARCH: Find the newest menu that started ON or BEFORE the clicked date
+        $menu = WeeklyMenu::where('week_start_date', '<=', $date)
+            ->with([
+                'dailyMenus.soup', 
+                'dailyMenus.entree_a', 
+                'dailyMenus.entree_b', 
+                'dailyMenus.dessert'
+            ])
+            ->orderBy('week_start_date', 'desc') // Get the closest one
+            ->first();
 
         if (!$menu) {
-            return response()->json(['message' => 'No menu available for this week.'], 404);
+            return response()->json(['message' => 'No menu found'], 404);
         }
 
-        return response()->json($menu);
+        return $menu;
     }
 }

@@ -33,23 +33,9 @@ class DailyMenu extends Model
     }
 
     // These relationships let us easily fetch the item details
-    public function soup(): BelongsTo
-    {
-        return $this->belongsTo(MenuItem::class, 'soup_item_id');
-    }
-
-    public function entreeA(): BelongsTo
-    {
-        return $this->belongsTo(MenuItem::class, 'entree_a_item_id');
-    }
-
-    public function entreeB(): BelongsTo
-    {
-        return $this->belongsTo(MenuItem::class, 'entree_b_item_id');
-    }
-
-    public function dessert(): BelongsTo
-    {
-        return $this->belongsTo(MenuItem::class, 'dessert_item_id');
-    }
+    // app/Models/DailyMenu.php
+    public function soup() { return $this->belongsTo(MenuItem::class, 'soup_item_id'); }
+    public function entree_a() { return $this->belongsTo(MenuItem::class, 'entree_a_item_id'); }
+    public function entree_b() { return $this->belongsTo(MenuItem::class, 'entree_b_item_id'); }
+    public function dessert() { return $this->belongsTo(MenuItem::class, 'dessert_item_id'); }
 }
