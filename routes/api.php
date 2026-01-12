@@ -43,6 +43,9 @@ Route::middleware(['auth:sanctum', 'is_admin'])->prefix('admin')->group(function
     // /api/admin/menu-items (POST) - Create a new menu item
     Route::post('/menu-items', [MenuItemController::class, 'store']);
 
+    // /api/admin/menu-items/{id} (DELETE) - Remove a menu item
+    Route::delete('/menu-items/{menuItem}', [MenuItemController::class, 'destroy']);
+
     // /api/admin/weekly-menus (POST) - Create a new weekly menu
     Route::post('/weekly-menus', [WeeklyMenuController::class, 'store']);
 

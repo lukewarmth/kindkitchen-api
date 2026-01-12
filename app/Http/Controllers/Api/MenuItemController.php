@@ -35,4 +35,13 @@ class MenuItemController extends Controller
         // 3. Return the new item with a 201 (Created) status
         return response()->json($menuItem, 201);
     }
+
+    /**
+     * Remove the specified menu item from storage.
+     */
+    public function destroy(MenuItem $menuItem)
+    {
+        // Delete the menu item
+        $menuItem->delete();
+    }
 }
