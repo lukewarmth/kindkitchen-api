@@ -77,8 +77,7 @@ class WeeklyMenuController extends Controller
 
     /**
      * Display the specified weekly menu.
-     * We "eager load" all the relationships to get the *names* of the food,
-     * not just their IDs. This is what the frontend will need.
+     * We "eager load" all the relationships to get the *names* of the food
      */
     public function show(WeeklyMenu $weeklyMenu)
     {
